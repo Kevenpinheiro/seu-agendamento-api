@@ -1,0 +1,47 @@
+{
+  "name": "seu-agendamento-api",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start:dev": "tsx watch src/server.ts",
+    "start": "node build/server.js",
+    "build": "tsup src --out-dir build",
+    "test": "vitest run --dir src/test/unit",
+    "dev": "pnpm run start:dev",
+    "test:watch": "vitest --dir src/test/unit",
+    "test:e2e": "vitest run --dir src/test/e2e",
+    "test:e2e:watch": "vitest --dir src/test/e2e"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@9.6.0+sha512.38dc6fba8dba35b39340b9700112c2fe1e12f10b17134715a4aa98ccf7bb035e76fd981cf0bb384dfa98f8d6af5481c2bef2f4266a24bfa20c34eb7147ce0b5e",
+  "devDependencies": {
+    "@rocketseat/eslint-config": "^2.2.2",
+    "@types/node": "^22.5.1",
+    "@types/nodemailer": "6.4.15",
+    "@types/supertest": "6.0.2",
+    "eslint": "8.57.0",
+    "prisma": "5.19.0",
+    "supertest": "7.0.0",
+    "tsup": "^8.2.4",
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.4",
+    "vite-tsconfig-paths": "5.0.1",
+    "vitest": "2.0.5"
+  },
+  "dependencies": {
+    "@fastify/cookie": "9.4.0",
+    "@fastify/jwt": "8.0.1",
+    "@prisma/client": "5.19.0",
+    "dayjs": "1.11.13",
+    "decimal.js": "^10.4.3",
+    "dotenv": "16.4.5",
+    "fastify": "^4.28.1",
+    "nodemailer": "6.9.15",
+    "twilio": "5.3.2",
+    "zod": "3.23.8"
+  }
+}

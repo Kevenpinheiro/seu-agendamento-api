@@ -1,0 +1,11 @@
+import 'dotenv/config'
+
+process.env.NODE_ENV = 'test'
+process.env.API_BASE_URL = 'http://localhost:3333'
+process.env.SMTP_USER = 'test@example.com'
+process.env.SMTP_PASS = 'test-password'
+process.env.TWILIO_ACCOUNT_SID = 'test-account-sid'
+process.env.TWILIO_AUTH_TOKEN = 'test-auth-token'
+process.env.TWILIO_PHONE_NUMBER = '+1234567890'
+process.env.JWT_SECRET = 'test-jwt-secret'
+process.env.AUTH_REDIRECT_URL = 'http://localhost:3000'

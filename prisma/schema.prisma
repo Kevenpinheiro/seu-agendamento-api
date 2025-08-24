@@ -1,0 +1,94 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  CLIENT
+  MANAGER
+}
+
+enum Status {
+  PENDING
+  CONFIRMED
+  CANCELED
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  phone     String   @unique
+  role      Role     @default(CLIENT)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  authLink      AuthLink[]
+  appointment   Appointment[]
+  Establishment Establishment[]
+
+  @@map("users")
+}
+
+model AuthLink {
+  id     String @id @default(uuid())
+  code   String @unique @default(uuid())
+  userId String @map("user_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("auth_links")
+}
+
+model Establishment {
+  id          String    @id @default(uuid())
+  name        String
+  description String
+  managerId   String
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime? @updatedAt @map("updated_at")
+
+  timeSlots    TimeSlot[]
+  appointments Appointment[]
+
+  manager User @relation(fields: [managerId], references: [id])
+
+  @@map("establishment")
+}
+
+model TimeSlot {
+  id              String   @id @default(uuid())
+  dayOfWeek       Int
+  startTime       String
+  endTime         String
+  establishmentId String   @map("establishment_id")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  establishment Establishment @relation(fields: [establishmentId], references: [id])
+  appointment   Appointment[]
+
+  @@map("time_slots")
+}
+
+model Appointment {
+  id              String    @id @default(uuid())
+  userId          String    @map("user_id")
+  establishmentId String    @map("establishment_id")
+  timeSlotId      String    @map("time_slot_id")
+  status          Status    @default(PENDING)
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime? @updatedAt @map("updated_at")
+
+  user          User          @relation(fields: [userId], references: [id])
+  establishment Establishment @relation(fields: [establishmentId], references: [id])
+  timeSlot      TimeSlot      @relation(fields: [timeSlotId], references: [id])
+
+  @@map("appointments")
+}

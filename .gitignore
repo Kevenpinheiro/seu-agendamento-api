@@ -1,0 +1,18 @@
+# Dependencies
+node_modules
+pnpm-lock.yaml
+
+# Production
+build
+
+
+# Environment
+.env
+.env.test
+
+# Eslint
+.eslintrc.json
+.eslintignore
+
+# Docker compose
+docker-compose.yml
