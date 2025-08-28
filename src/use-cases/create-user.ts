@@ -35,8 +35,6 @@ export class CreateUserUseCase {
       phone,
     })
 
-    console.log(user)
-
     return { user }
   }
 }

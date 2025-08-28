@@ -58,8 +58,6 @@ describe('Establishment time slots Use Case', () => {
       endTime,
     })
 
-    console.log(result)
-
     await expect(() =>
       sut.execute({
         establishmentId: establishment.id,

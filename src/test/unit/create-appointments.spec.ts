@@ -48,8 +48,6 @@ describe('Create appointments Use Case', () => {
       timeSlotId: randomUUID(),
     })
 
-    console.log(appointment)
-
     expect(appointment.id).toEqual(expect.any(String))
   })
 })

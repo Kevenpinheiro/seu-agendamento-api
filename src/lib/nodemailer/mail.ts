@@ -2,12 +2,9 @@ import nodemailer from 'nodemailer'
 import { env } from '@/env'
 
 export const mail = nodemailer.createTransport({
-  service: 'hotmail',
-  port: 587,
-  secure: false,
-  debug: true,
+  service: "gmail",
   auth: {
-    user: env.SMTP_USER,
-    pass: env.SMTP_PASS,
+    user: "contato.kevenpinheiro@gmail.com",
+    pass: process.env.GOOGLE_APP_PASSWORD,
   },
-})
+});

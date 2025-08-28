@@ -4,7 +4,7 @@ import { env } from '@/env'
 import { AuthLinkRepository } from '@/repositories/auth-link-repository'
 
 import { UserNotFoundError } from './errors/user-not-found-error'
-import { mail } from '@/lib/mail'
+import { mail } from '@/lib/nodemailer/mail'
 
 import { UserRepository } from '@/repositories/user-repository'
 
@@ -43,7 +43,7 @@ export class SendAuthLinkUseCase {
     authLink.searchParams.set('code', authLinkCode)
     authLink.searchParams.set('redirect', env.AUTH_REDIRECT_URL)
 
-    mail.sendMail({
+    const info = await mail.sendMail({
       from: {
         name: 'Seu Agendamento',
         address: env.SMTP_USER,
@@ -53,9 +53,7 @@ export class SendAuthLinkUseCase {
       text: `Acesse sua área de agendamentos através deste link!: ${authLink.toString()}`,
     })
 
-    // FIX: Enviar o link por SMS
-
-    console.log(authLink.toString())
+    // TODO: Enviar o link por SMS
 
     return {
       authLink: authLink.toString(),
