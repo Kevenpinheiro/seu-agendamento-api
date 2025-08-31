@@ -46,7 +46,7 @@ export class SendAuthLinkUseCase {
     const info = await mail.sendMail({
       from: {
         name: 'Seu Agendamento',
-        address: 'contato.kevenpinheiro@gmail.com',
+        address: env.SMTP_USER || "contato.kevenpinheiro@gmail.com",
       },
       to: email,
       subject: 'Verificação de e-mail Seu Agendamento',

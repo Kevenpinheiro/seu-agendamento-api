@@ -7,9 +7,23 @@ jobs:
     name: Run Unit Tests API
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:14
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: seu_agendamento
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
     steps:
       - uses: actions/checkout@v3
- 
+
       - uses: pnpm/action-setup@v2
         with:
           version: 9.6.0
@@ -23,11 +37,19 @@ jobs:
 
       - run: pnpm prisma generate
 
+      - run: pnpm prisma migrate deploy
+
       - run: pnpm run test
         env:
           NODE_ENV: test
           DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/seu_agendamento?schema=public"
           PORT: 3333
-          SMTP_USER: contato.kevenpinheiro@gmail.com
-          SMTP_PASS: abogvoucjvzzsbby
+          API_BASE_URL: "http://localhost:3333"
+          JWT_SECRET: "test-jwt-secret-key-for-ci"
+          AUTH_REDIRECT_URL: "http://localhost:3000"
+          SMTP_USER: "contato.kevenpinheiro@gmail.com"
+          SMTP_PASS: "abogvoucjvzzsbby"
+          TWILIO_ACCOUNT_SID: "test-account-sid"
+          TWILIO_AUTH_TOKEN: "test-auth-token"
+          TWILIO_PHONE_NUMBER: "+1234567890"
           
