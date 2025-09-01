@@ -4,7 +4,7 @@ import { env } from '@/env'
 export const mail = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "contato.kevenpinheiro@gmail.com",
-    pass: process.env.GOOGLE_APP_PASSWORD,
+    user: env.SMTP_USER,
+    pass: env.SMTP_PASS,
   },
 });

@@ -1,7 +1,17 @@
 import { SendAuthLinkUseCase } from '@/use-cases/send-auth-link'
-import { beforeEach, describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { InMemoryAuthLinkRepository } from '../repositories/in-memory/in-memory-auth-link-repository'
 import { InMemoryUserRepository } from '../repositories/in-memory/in-memory-user-repository'
+
+// Mock nodemailer
+vi.mock('@/lib/nodemailer/mail', () => ({
+  mail: {
+    sendMail: vi.fn().mockResolvedValue({
+      messageId: 'test-message-id',
+      response: 'OK'
+    })
+  }
+}))
 
 let userRepository: InMemoryUserRepository
 let authLinkRepository: InMemoryAuthLinkRepository
@@ -15,7 +25,7 @@ describe('send auth link use case', () => {
     sut = new SendAuthLinkUseCase(userRepository, authLinkRepository)
   })
 
-  it.skip('should be able to send an auth link to an existing user', async () => {
+  it('should be able to send an auth link to an existing user', async () => {
     const user = await userRepository.create({
       name: 'John Doe',
       email: 'johndoe@mail.com',
